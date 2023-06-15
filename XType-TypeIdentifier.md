@@ -96,7 +96,7 @@ TypeIdentifier对照XType中的Table 29
 提供了一种紧凑的方式来表示与远程应用程序确定类型可分配性相关的类型信息。该表示形式不包括对类型没有影响的类型信息。例如，对于具有可扩展性类型MUTABLE的类型，不包括用户定义的注释或成员的顺序等信息。
 
 TypeObject代码中定义：                                                                                                                                                       
-##### <img src="pic/XType-TypeObject" alt="image-20230608112348031" />
+<img src="pic/XType-TypeObject.png" alt="image-20230608112348031" />
 
 complete和minimal的区别在于complete的每个类型都带有一个header，而minimal中部分类型省略了这个部分。
 
