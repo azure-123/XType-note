@@ -76,7 +76,7 @@ TypeIdentifier和TypeObject并没有封装在FastCDR当中
 
 TypeKind对照XType中的Table 29
 
-##### <img src="C:\Users\weira\AppData\Roaming\Typora\typora-user-images\image-20230608112348031.png" alt="image-20230608112348031" style="zoom:50%;" />                            
+##### <img src="pic/XType-TypeKind.png" alt="image-20230608112348031" style="zoom:50%;" />                            
 
 TypeIdentifier对照XType中的Table 29
 
