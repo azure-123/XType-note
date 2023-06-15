@@ -80,7 +80,7 @@ TypeKind对照XType中的Table 29
 
 TypeIdentifier对照XType中的Table 29
 
-##### <img src="pic/XType-TypeIdentifier.png" alt="image-20230608112348031" style="zoom:50%;" />
+##### <img src="pic/XType-TypeIdentifier.png" alt="image-20230608112348031" />
 
 - [ ] 疑问：TypeIdentifier中的SMALL和LARGE区分的意义在于什么？
 
@@ -95,9 +95,8 @@ TypeIdentifier对照XType中的Table 29
 
 提供了一种紧凑的方式来表示与远程应用程序确定类型可分配性相关的类型信息。该表示形式不包括对类型没有影响的类型信息。例如，对于具有可扩展性类型MUTABLE的类型，不包括用户定义的注释或成员的顺序等信息。
 
-TypeObject代码中定义：                                                                                                                                                       ![XType-TypeObject](pic/XType-TypeObject)
-
-
+TypeObject代码中定义：                                                                                                                                                       
+##### <img src="pic/XType-TypeObject" alt="image-20230608112348031" />
 
 complete和minimal的区别在于complete的每个类型都带有一个header，而minimal中部分类型省略了这个部分。
 
@@ -134,7 +133,7 @@ struct TreeNode {
 
 其类型关系如下所示：
 
-<img src="C:\Users\weira\AppData\Roaming\Typora\typora-user-images\image-20230615113835951.png" alt="image-20230615113835951" style="zoom:50%;" />
+<img src="pic/XType-dependency-example.png" alt="image-20230615113835951" style="zoom:50%;" />
 
 - [ ] 疑问：协议中原话"More complex dependency cycles are possible where one type depends on another, which depends on another forming a dependency chain that eventually points back to the original type." 这说明数据类型有可能是循环定义的，这样创建对象的时候不会产生死循环的情况吗？协议中的这种情况真的需要考虑吗？还是说我理解有误？
 
@@ -144,7 +143,7 @@ struct TreeNode {
 
 同时将有向图再简化成核心DAG，则将有向图中的各个强连通分量都揉成一个顶点。如下图所示，将1~12顶点划分成强连通分量SC1~SC5，并把这些分量简化为一个新的有向图。
 
-![image-20230615112440759](C:\Users\weira\AppData\Roaming\Typora\typora-user-images\image-20230615112440759.png)
+<img src="pic/XType-dependency.png" alt="image-20230615113835951" />
 
 1、**计算TypeIdentifier哈希值的基本算法**需要求序列化的TypeObject的哈希值，而构建TypeObject需要获取其所有依赖的TypeIdentifier，因此不适用于有循环依赖的情况。比如：
 
@@ -180,7 +179,7 @@ struct B {
 
 **SCCIndex(U)**是属于该强连通分量的每个类型U的排序索引，从第一个类型开始索引为1。
 
-![企业微信截图_16868109111188](C:\Users\weira\AppData\Local\Temp\企业微信截图_16868109111188.png)
+<img src="pic/XType-dependency-draft.png" alt="image-20230615113835951" style="zoom:50%;" />
 
 算法流程：
 
