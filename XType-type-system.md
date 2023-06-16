@@ -62,3 +62,4 @@ struct VehicleLocation3DType : VehicleLocationType {
 
 <img src="pic/XType-type-system-model.png" />
 
+不同类型的extensibility kind（FINAL APPENDABLE MUTABLE）在XType7.2.2的图中的constraints里指定
