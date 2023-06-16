@@ -1,3 +1,5 @@
+#### 概念
+
 ##### 类型进化
 
 比如有两个版本的系统，第一个版本定义了一个类型VehicleLocationType，用IDL定义如下：
@@ -55,3 +57,8 @@ struct VehicleLocation3DType : VehicleLocationType {
 类型系统支持稀疏类型，其中一个类型可以有被标记为“可选”的字段，以便数据表示可以省略这些字段。为了节省网络带宽，也可以省略非可选字段的值，在这种情况下，服务将代表应用程序自动填充默认值。
 
 - [ ] 没太理解
+
+#### 类型系统
+
+<img src="pic/XType-type-system-model.png" />
+
