@@ -47,5 +47,9 @@ struct VehicleLocation3DType : VehicleLocationType {
 
 这也有两个情况：
 
-- 期望读取VehicleLocation的DataReader可以接受VehicleLocation3DType和其基类型
+- 订阅主题“车辆位置”的应用程序可以接收到从写入 VehicleLocation3DType 的发布者那里发送的数据，即应用程序可以写入扩展类型并读取基本类型。换句话说，应用程序可以写入扩展类型并读取基础类型。
 - 期望读取VehicleLocation3DType的DataReader可以接受VehicleLocation类型，对于那些拓展的字段，不采用任何值或者使用缺省值，取决于类型的定义
+
+##### 稀疏类型
+
+类型系统支持稀疏类型，其中一个类型可以有被标记为“可选”的字段，以便数据表示可以省略这些字段。为了节省网络带宽，也可以省略非可选字段的值，在这种情况下，服务将代表应用程序自动填充默认值。
