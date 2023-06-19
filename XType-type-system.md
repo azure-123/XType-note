@@ -63,3 +63,24 @@ struct VehicleLocation3DType : VehicleLocationType {
 <img src="pic/XType-type-system-model.png" />
 
 不同类型的extensibility kind（FINAL APPENDABLE MUTABLE）在XType7.2.2的图中的constraints里指定
+
+##### 被使用者所理解问题（must understand）
+
+不被使用者所理解：数据的使用者可能与数据的生产者对一个类型的定义不同。当使用者观察到它不理解的成员值时，必须能够确定是否可以忽略该成员并继续处理其他成员，还是必须丢弃整个数据样本。
+
+- [ ] 疑问：这里的未识别如何定义？
+- [ ] 疑问：这里的数据样本指什么？
+
+一个聚合类型的每个成员都有一个Boolean类型的属性”must understand“，如果这个值为true，使用者遇到无法识别的成员则需要丢弃整个成员所在的数据样本；如果这个值为false，使用者忽略这个未识别成员
+
+- 对于结构体，每个成员都应该有一个”must understand“的属性
+- 对于联合体，discriminator成员的”must understand“需要永远被设置为true
+
+##### key
+
+*！key必须是must understand的，而且是non-optional的。*
+
+*！一个类型的key只能包括以下类型的成员：原始类型（primitive）、聚合类型（aggregation）、枚举类型（enumeration）、位掩码类型（bitmask）、数组类型（array）和序列类型（sequence）。*
+
+- 对于结构体，key可以是任意个数、任意成员
+- 对于联合体，只有discriminator允许成为key
