@@ -84,3 +84,7 @@ struct VehicleLocation3DType : VehicleLocationType {
 
 - 对于结构体，key可以是任意个数、任意成员
 - 对于联合体，只有discriminator允许成为key
+
+##### 可选成员（optional）
+
+可选成员的值可以省略
