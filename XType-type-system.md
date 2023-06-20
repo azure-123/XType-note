@@ -87,4 +87,5 @@ struct VehicleLocation3DType : VehicleLocationType {
 
 ##### 可选成员（optional）
 
-可选成员的值可以省略
+可选成员的值可以省略，省略值表示不存在或不相关的值。在这种情况下，实现不应该提供默认值。
+
