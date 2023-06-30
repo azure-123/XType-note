@@ -76,6 +76,15 @@ struct VehicleLocation3DType : VehicleLocationType {
 - 对于结构体，每个成员都应该有一个”must understand“的属性
 - 对于联合体，discriminator成员的”must understand“需要永远被设置为true
 
+##### 可选成员（optional）
+
+可选成员的值可以省略，省略值表示不存在或不相关的值。在这种情况下，实现不应该提供默认值。
+
+- 联合体成员包括discriminator不能为可选成员
+- 结构体成员可以成为可选成员
+
+optional和must understand属性值无关
+
 ##### key
 
 *！key必须是must understand的，而且是non-optional的。*
@@ -84,8 +93,4 @@ struct VehicleLocation3DType : VehicleLocationType {
 
 - 对于结构体，key可以是任意个数、任意成员
 - 对于联合体，只有discriminator允许成为key
-
-##### 可选成员（optional）
-
-可选成员的值可以省略，省略值表示不存在或不相关的值。在这种情况下，实现不应该提供默认值。
 
