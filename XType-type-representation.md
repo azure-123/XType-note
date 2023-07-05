@@ -51,3 +51,4 @@ annotation的作用范围：构造类型、bitmask、enumeration字面值、聚�
 @mutable
 
 如果给定类型的表示不指示类型的可扩展性，则应将该类型视为appendable。如果未指定值的注释，或者将值设置为USE_DEFAULT，则行为将设置为使用默认值。
+
