@@ -168,6 +168,8 @@ T1 is-assignable-from T2满足的条件：T2对象的一个有意义的子集可
 
 ##### 赋值规则
 
+详情见7.2.4.4
+
 ###### equivalent types
 
 如果类型T1和T2使用MINIMAL关系等价，那它们互相可赋值，则T1 is-assignable-from T2且T2 is-assignable-from T1，但是反之不一定成立。
@@ -230,8 +232,46 @@ T1和T2两者is-assignable-from关系的条件为：两者均为sequence，且�
 
 **enumeration**
 
-两者均为enumeration，extensibility选项相同，在T1和T2中名称和值的对应关系相同（可以使用@ignore_literal_names注解进行修改，7.3.1）。如果是FINAL而且两者有相同的命名值
+两者均为enumeration，extensibility选项相同，在T1和T2中相同名称的值相同，相同值名称相同（可以使用@ignore_literal_names注解进行修改，7.3.1）。如果是FINAL，还需要两者有相同的字面值
 
 若T2任意名称和值不在T1中，则不可赋值
 
 ###### aggregated types
+
+**union**
+
+满足is-assignable-from关系的条件：
+
+两者均为union，extensibility相同，T1的discriminator可强赋值自T2的discriminator，T1和T2的discriminator要么全是key要么都不是key，所有有相同名字的成员有相同ID、所有有相同ID的成员有相同名字。对于 T2 中选择 T1 的某个成员（包括选择 T1 的默认标签）的所有非默认标签，T1 中所选成员的类型可以从 T2 成员的类型中赋值得到。如果在 T1 中有任何非默认标签选择了 T2 的默认成员，则在 T1 中选择的成员的类型可以从 T2 默认成员的类型中赋值得到。如果 T1 和 T2 都有默认标签，那么与 T1 默认成员相关联的类型可以从与 T2 默认成员相关联的类型中赋值得到。如果 T1（因此也包括 T2）的可扩展性是最终的，那么它们的标签集是相同的。否则，它们至少有一个公共标签，除了默认标签。
+
+- [ ] 以上纯翻译，没懂是什么意思
+
+**structure**
+
+满足is-assignable-from关系的条件：
+
+- 两者均为structure
+- extensibility相同
+- 所有有相同名字的成员有相同ID、所有有相同ID的成员有相同名字
+- 至少一个T1的成员和一个T2的成员id相等
+- 对于T2中的任意成员m2，如果在T1中有一个成员m1与其同ID，则m1的类型可赋值自m2
+- 满足non-optional和must_understand的成员需要在两个类型中都存在
+- 被标记为key的成员都需要在两个类型中都存在
+- key成员约束
+  - 对于类型为 T2 的任何字符串key成员 m2，具有相同成员 ID 的 T1 的成员 m1 验证 m1.type.length >= m2.type.length。
+  - 对于 T2 中的任何枚举key成员 m2，具有相同成员 ID 的 T1 的成员 m1 验证 m2.type 中的所有字面量都出现在 m1.type 中。
+  - 对于 T2 中的任何sequence或map的key成员 m2，具有相同成员 ID 的 T1 的成员 m1 验证 m1.type.length >= m2.type.length。
+  - 对于类型为 T2 的任何结构体或联合体key成员 m2，具有相同成员 ID 的 T1 的成员 m1 验证 KeyHolder(m1.type) 可以从 KeyHolder(m2.type) 赋值得到。其中，KeyHolder 是一个函数，用于提取结构体或联合体类型的key信息。
+  - 对于类型为 T2 的任何联合体key成员 m2，具有相同成员 ID 的 T1 的成员 m1 验证：对于 m2.type 的每个discriminator值，它选择 m2.type 中的一个成员 m22，discriminator值选择 m1.type 中验证 KeyHolder(m11.type) 可以从 KeyHolder(m22.type) 赋值得到的成员 m11。其中，KeyHolder 是一个函数，用于提取结构体或联合体类型的key信息。
+- 若T1是APPENDABLE的，则具有相同的member_index的成员具有相同的成员 ID 和optional属性设置，且 T1 成员类型可以从 T2 成员类型强制赋值。
+- 若T2是FINAL的，则满足APPENDABLE的所有条件，并附加条件成员ID集合相同
+
+对象构造：
+
+T1 对象中的每个非可选成员（non-optional member），如果在 T2 对象中不存在，则取默认值。
+T1 对象中的每个可选成员（optional member），如果在 T2 对象中不存在，则不取任何值。
+
+如果 T2 对象中存在一个“必须理解”（must understand）的成员，则 T1 必须有一个相同成员 ID 的成员。否则，对象无法构造 T1。这种行为不受 TryConstruct 设置的影响。
+如果无法构造 T1 中的对应成员，则其行为由该成员的 TryConstruct 设置确定。
+
+*！根据XType7.2.4.4.8.1中举的例子，IDL中的结构体名称不同不影响赋值，但是根据赋值规则，结构体内的成员名称要是相同的*
