@@ -8,9 +8,9 @@
 
 ##### XCDR两种编码格式
 
-PLAIN_CDR：引入了扩展以处理可选成员、位掩码和映射。
+PLAIN_CDR：引入了扩展以处理可选成员、位掩码和映射。（final/appendable）
 
-PL_CDR：利用了RTPS参数列表编码来处理可变类型。
+PL_CDR：利用了RTPS参数列表编码来处理可变类型。（mutable）
 
 ###### PLAIN_CDR
 
@@ -124,6 +124,20 @@ PLAIN_CDR2、DELIMITED_CDR和PL_CDR2
 
 PLAIN_CDR2：所有原始类型、字符串和枚举类型。编码类似于PLAIN_CDR，不同之处在于INT64、UINT64、FLOAT64和FLOAT128被序列化到CDR缓冲区的偏移量上，这些偏移量与PLAIN_CDR中的情况不同，被对齐到4而不是8。
 
-DELIMITED_CDR：带有APPENDABLE扩展性类型的类型。
+DELIMITED_CDR：带有APPENDABLE扩展性类型的类型。额外序列化一个DHEADER，记录对象的序列化大小（不包括DHEADER本身）
 
 PL_CDR2：带有MUTABLE扩展性类型的聚合类型。与DELIMITED_CDR类似，它在序列化对象之前也会序列化一个DHEADER。此外，它还在每个序列化成员之前序列化一个成员头（EMHEADER）。成员头编码了成员ID、must-understand标志和接下来的序列化成员的长度。
+
+##### 序列化规则
+
+![](C:\Users\weira\Desktop\笔记\pic\XType-serialization-rules.png)
+
+XCDR：包含对象序列化的流
+
+[vv]：编码版本
+
+\<match criteria>：被序列化到XCDR流的对象
+
+各个类型的序列化规则见7.4.3.5.3
+
+- [ ] 疑问：类似于sequence这样的类型的序列化，在XCDR2中会在DHEADER后加一个sequence的长度，那么DHEADER包不包括这个部分的长度？
