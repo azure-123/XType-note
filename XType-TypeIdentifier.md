@@ -20,7 +20,7 @@ TypeIdentifier和TypeObject并没有封装在FastCDR当中
 
 ##### TypeIdentifier
 
-分成多种类别
+TypeIdentifier=是一个带discriminator的联合体，允许标识符的格式根据类型而变化，分成多种类别
 
 ###### Fully-descriptive TypeIdentifiers
 
