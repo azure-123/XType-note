@@ -140,4 +140,4 @@ XCDR：包含对象序列化的流
 
 各个类型的序列化规则见7.4.3.5.3
 
-- [ ] 疑问：类似于sequence这样的类型的序列化，在XCDR2中会在DHEADER后加一个sequence的长度，那么DHEADER包不包括这个部分的长度？
+- [ ] 疑问：类似于structrue的sequence这样的类型的序列化，在XCDR2中会在DHEADER后加一个sequence的长度，那么DHEADER包不包括这个部分的长度？
